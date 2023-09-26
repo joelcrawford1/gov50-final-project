@@ -11,4 +11,4 @@ output:
 
 ## Project thoughts
 
-I am interested in exploring data related to Congress.
+I am interested in exploring data related to Congress. I want to look at effect of age on numbers of legilsative passed in a particular congress. Do younger representatives pass more legislation or less than older representatives? 
