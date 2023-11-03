@@ -11,6 +11,20 @@ output:
 
 ## Project thoughts
 
-I am interested in exploring data related to Congress. I want to look at effect of seniority on numbers of legislation introduced and passed in a particular congress. Do more senior members of Congress introduce more legislation than less senior? And do the bills more senior members of Congress become law than less senior? I hypothesize that less senior members of introduce more legislation than older representatives, but that  senior members of congress get their bills signed into law more than less senior. My sample is compromised of each of the 93rd - 110th Congress. My unit of analysis is a Congress. The explanatory variables of interest is coded is the number of terms served counting the current term. If the variable coded = 7, it would mean that the member had served 7 terms in Congress. My outcome variable si the count of pieces of legislation introduced and peices that became law. If the variable coded were = 4, this would mean that the member either introduced 4 pieces of legislation or that 4 pieces of legislation became law. The variables measured are easily accessible online via Congress.gov. I got the data set from the Center for Effective Lawmaking. If more senior members of congress introduced less pieces, but passed more legislation, then my hypothesis would be correct. However, if the data is run, and it appears that the younger members are actually introducing and passing more legislation than senior members, then my hypothesis would be very wrong.  
+I am interested in exploring data related to Congress. I want to look at effect of seniority on numbers of legislation introduced and passed in a particular congress. Do more senior members of Congress introduce more legislation than less senior? And do the bills more senior members of Congress become law than less senior? I hypothesize that less senior members of introduce more legislation than older representatives, but that  senior members of congress get their bills signed into law more than less senior. My sample is compromised of each of the 93rd - 110th Congress. My unit of analysis is a Congress. The explanatory variables of interest is coded is the number of terms served counting the current term. If the variable coded = 7, it would mean that the member had served 7 terms in Congress. My outcome variable si the count of pieces of legislation introduced and peices that became law. If the variable coded were = 4, this would mean that the member either introduced 4 pieces of legislation or that 4 pieces of legislation became law. The variables measured are easily accessible online via Congress.gov. I got the data set from the Center for Effective Lawmaking. If more senior members of congress introduced less pieces, but passed more legislation, then my hypothesis would be correct. However, if the data is run, and it appears that the younger members are actually introducing and passing more legislation than senior members, then my hypothesis would be very wrong.   
 
+
+```{r}
+library(readr)
+congress <- read_csv("CONGRESS DATA .csv")
+
+
+plot_q1 <- ggplot(data = congress,
+                  mapping = aes (x = seniority,
+                                 y = ss_pass)) +
+  geom_boxplot()
+
+plot_q1
+
+```
 
