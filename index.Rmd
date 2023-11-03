@@ -21,12 +21,14 @@ library(tidyverse)
 library(dplyr)
 library(ggplot2)
 
+congress <- read_csv("CONGRESS DATA .csv")
+
 new_data <- subset(congress, seniority < 11)
 
 ggplot(new_data) + geom_col(aes(x = seniority, y = s_bills)) +
   labs(title = "Relationship Between Seniority of Members of Congress 
         and Number of Bills Passed House", x = "Seniority of Member (terms)", 
-       y = "Number of Substantitive Bills Passed House") + xlim(0, 50) + ylim(0,50)
+       y = "Number of Substantitive Bills Passed House")
             
 ```
 
