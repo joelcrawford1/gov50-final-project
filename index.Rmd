@@ -35,3 +35,18 @@ ggplot(CONGRESS_DATA_) + geom_col(aes(x = congress, y = all_law)) +
 ```
 
 
+```{r}
+
+model<- lm(data = CONGRESS_DATA_, all_law~congress)|>
+  broom::tidy()|>
+  select(term, est=estimate, se= std.error, pval=p.value)
+
+knitr::kable(model, digits=3, col.names = c("Variable", "Coefficeient Estimate", "Standard Error", "P-Value"))
+
+
+
+
+
+```
+
+From the plot entitled "The Number of Bills that became law", we can see that as the sessions Congress increase, the number of bills that become law decrease. In other words, in more recent years, there have been less Bills that have become law. From the Table, we can see that this relationship is significant, and that as the sessions of Congress increase, there is about a 2% decrase in bills that become law. 
