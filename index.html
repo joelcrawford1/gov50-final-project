@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["CONGRESS DATA .csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-1-1.png","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js","UCONGRESS DATA.csv"]}
+  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-1-1.png","index_files/figure-html5/unnamed-chunk-10-1.png","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/figure-html5/unnamed-chunk-6-1.png","index_files/figure-html5/unnamed-chunk-8-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1518,30 +1518,152 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 <div class="d-article">
 <h2 id="project-thoughts">Project thoughts</h2>
-<p>I am interested in exploring data related to Congress. I want to look at relationship between previous years of Congress and the numbers of legislation introduced and passed in a particular congress. Is more legislation passed today then many years ago? I hypothesize that less legislation has been passed over time. My sample is compromised of each of the 93rd - 110th Congress. My unit of analysis is a Congress. The explanatory variables of interest is coded is the number of terms served counting the current term. If the variable coded = 7, it would mean that the member had served 7 terms in Congress. My outcome variable is the count of pieces of legislation introduced and pieces that became law. If the variable coded were = 4, this would mean that 4 pieces of legislation became law. The variables measured are easily accessible online via Congress.gov. I got the data set from the Center for Effective Lawmaking. If more senior members of congress introduced less pieces, but passed more legislation, then my hypothesis would be correct. However, if the data is run, and it appears that the more legislation becomes law in the present that in previous sessions of Congress, then my hypothesis would be very wrong.</p>
+<p>I am interested in exploring data related to Congress and the efficacy of legislation in preventing crime. Do Republican lead Congress have less crime? Or do Democratic lead Congress’ lead to less crime. I will predict that when Democrats are in the majority, there is less crime than when Republicans are in the majority. My sample is compromised of each of the 93rd - 115h Congress. My unit of analysis is a Congress. The explanatory variables of interest is the political party in charge. If the variable coded = 0, it would mean that the Republicans are in the majority party in Congress. If the variable coded = 1, it would means that Democrats are in charge. My outcome variable is the number of violent offenses during each particular Congress. If the variable coded were = 4000, this would mean that, there were 4000 violent offenses for every 100,000 people in the population.</p>
+<p>To create this data, I had to merge data from two different places and essential create my own data set. I got the data regarding the party from the Brooking Institute, and I received the data regarding the crime rate in each session from the Federak Bureau of Investigation (FBI) Crime Data Explorer.</p>
+<p>If I run my data, and it shows that when Republicans are in the majority, there is less crime, then my hypothesis would be wrong. But, if the data shows the there is more crime when Republicans are in office, then my hypothesis would be right.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readr.tidyverse.org'>readr</a></span><span class='op'>)</span></span>
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/jennybc/gapminder'>gapminder</a></span><span class='op'>)</span></span>
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span></span>
-<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span></span>
-<span></span>
-<span></span>
-<span><span class='va'>CONGRESS_DATA_</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"CONGRESS DATA .csv"</span>, </span>
-<span>    col_types <span class='op'>=</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/cols.html'>cols</a></span><span class='op'>(</span>congress <span class='op'>=</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/parse_number.html'>col_number</a></span><span class='op'>(</span><span class='op'>)</span>, </span>
-<span>        all_law <span class='op'>=</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/parse_number.html'>col_number</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>CONGRESS_DATA_</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>congress</span>, y <span class='op'>=</span> <span class='va'>all_law</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"The Number of Bills that become Law per Congress"</span></span>
-<span>, x <span class='op'>=</span> <span class='st'>"Session of Congress"</span>, </span>
-<span>       y <span class='op'>=</span> <span class='st'>"Number of Bills that became Law"</span><span class='op'>)</span></span></code></pre>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readxl.tidyverse.org'>readxl</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/unnamed-chunk-1-1.png" width="624" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>model</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>CONGRESS_DATA_</span>, <span class='va'>all_law</span><span class='op'>~</span><span class='va'>congress</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readxl.tidyverse.org'>readxl</a></span><span class='op'>)</span></span>
+<span><span class='va'>congresssional_data_final</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_excel</a></span><span class='op'>(</span><span class='st'>"~/Downloads/congresssional data final.xlsx"</span>, </span>
+<span>    col_types <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"numeric"</span>, <span class='st'>"numeric"</span>, <span class='st'>"numeric"</span>, </span>
+<span>        <span class='st'>"numeric"</span>, <span class='st'>"numeric"</span>, <span class='st'>"numeric"</span>, </span>
+<span>        <span class='st'>"numeric"</span>, <span class='st'>"numeric"</span>, <span class='st'>"numeric"</span>, </span>
+<span>        <span class='st'>"numeric"</span>, <span class='st'>"text"</span>, <span class='st'>"numeric"</span>, <span class='st'>"numeric"</span>, </span>
+<span>        <span class='st'>"numeric"</span>, <span class='st'>"numeric"</span>, <span class='st'>"numeric"</span>, </span>
+<span>        <span class='st'>"numeric"</span>, <span class='st'>"numeric"</span>, <span class='st'>"numeric"</span>, </span>
+<span>        <span class='st'>"numeric"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span></span>
+<span></span>
+<span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>congresssional_data_final</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>party</span>, y <span class='op'>=</span> <span class='va'>crime</span>, fill <span class='op'>=</span> <span class='va'>party</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_bar</a></span><span class='op'>(</span>stat <span class='op'>=</span> <span class='st'>"identity"</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    title <span class='op'>=</span> <span class='st'>"Comparison of Reported Crimes by Party in Charge"</span>,</span>
+<span>    x <span class='op'>=</span> <span class='st'>"Party in Charge"</span>,</span>
+<span>    y <span class='op'>=</span> <span class='st'>"Number Violent Crime Offenses</span></span>
+<span><span class='st'>    per 100,000 people"</span></span>
+<span>  <span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>scale_fill_manual</a></span><span class='op'>(</span>values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>R <span class='op'>=</span> <span class='st'>"steelblue1"</span>, D <span class='op'>=</span> <span class='st'>"indianred1"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
+</div>
+<p>Looking at this data, we see a graph that shows the amount of crime over the entire time period (93rd Congress to 115th Congress). It breaks the crime down based on the party that is in charge. On the left, we see the over the entire time period, the Republican majority saw way more violent crimes, than the Democratic majority.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>congresssional_data_final</span><span class='op'>$</span><span class='va'>party_num</span>, <span class='va'>congresssional_data_final</span><span class='op'>$</span><span class='va'>crime</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] 0.5393004</code></pre>
+</div>
+<p>This calculation confirms a positive linear relationship between the party and the amount crime. In other words, when Democrats are in the majority (party_num = 1), there is more crime. But, when Republicans are in office (party_num = 0), there is less crime.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>model</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>congresssional_data_final</span>, <span class='va'>crime</span><span class='op'>~</span><span class='va'>party_num</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>term</span>, est<span class='op'>=</span><span class='va'>estimate</span>, se<span class='op'>=</span> <span class='va'>std.error</span>, pval<span class='op'>=</span><span class='va'>p.value</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>model</span>, digits<span class='op'>=</span><span class='fl'>3</span>, col.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Variable"</span>, <span class='st'>"Coefficient Estimate"</span>, <span class='st'>"Standard Error"</span>, <span class='st'>"P-Value"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: right;">Coefficient Estimate</th>
+<th style="text-align: right;">Standard Error</th>
+<th style="text-align: right;">P-Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">1475846.2</td>
+<td style="text-align: right;">54352.35</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">party_num</td>
+<td style="text-align: right;">210772.6</td>
+<td style="text-align: right;">73593.43</td>
+<td style="text-align: right;">0.01</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>So, this graph shows us a few different things. First of all, the intercept is when party_num = 0, or when Republicans are in power. This graph shows us that when Republicans are in the majority, the estimated amount of crime is 1,475,862.2. The p-value is 0, meaning that this is statically significant.</p>
+<p>In addition, the graph tells us that when party_num = 1, or when Democrats are in power, there is estimated to be an increase of 210,772.6 cases of crime, compared to when Republicans are in power. The p-value of 0.01 tells us that this is statistically significant.</p>
+<p>Overall, this graph shows us that when democrats are in power, it is estimated that there will be substantially more cases of crime.</p>
+<p>Conclusion</p>
+<p>In conclusion, my hypothesis was incorrect. When democrats are in power, the data shows us that there tends to be more crime, as opposed to when Republicans are in power. In this data set, there are various limitations that I would fix if I had more data or more money. Mainly, I would like to look at the types of bills that are being passed by each party to see if they are directly working to decrease the amount of crime. In other words, are there specific bills that are being passed that can explain why a Republican majority has less crime. In addition, since it takes time for policies to set in, it might also be that the decreased crime is due to Democrat polices. We would need more data to see if the Republicans are intentionally doing things to decrease the crime, or if the crime is decreasing due to policies implemented prior to them taking the majority.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>congresssional_data_final</span><span class='op'>$</span><span class='va'>party_num</span>, <span class='va'>congresssional_data_final</span><span class='op'>$</span><span class='va'>crime</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] 0.5393004</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>congresssional_data_final</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>crime_rate</span>, y <span class='op'>=</span> <span class='va'>congress_in</span>, color <span class='op'>=</span> <span class='va'>party</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    title <span class='op'>=</span> <span class='st'>"Scatter Plot of Crime and Party in Charge"</span>,</span>
+<span>    x <span class='op'>=</span> <span class='st'>"Crime Reported"</span>,</span>
+<span>    y <span class='op'>=</span> <span class='st'>"Congress Session"</span></span>
+<span>  <span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>scale_color_manual</a></span><span class='op'>(</span>values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>R <span class='op'>=</span> <span class='st'>"steelblue1"</span>, D <span class='op'>=</span> <span class='st'>"indianred1"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-6-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>congresssional_data_final</span><span class='op'>$</span><span class='va'>crime_rate</span>, <span class='va'>congresssional_data_final</span><span class='op'>$</span><span class='va'>congress_in</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] -0.8630978</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>congresssional_data_final</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>congress_in</span>, y <span class='op'>=</span> <span class='va'>crime</span>, color <span class='op'>=</span> <span class='va'>party</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    title <span class='op'>=</span> <span class='st'>"Relationship between Crime and Party in Charge in each Congress"</span>,</span>
+<span>    x <span class='op'>=</span> <span class='st'>"Congress"</span>,</span>
+<span>    y <span class='op'>=</span> <span class='st'>"Number of Crimes Reported"</span></span>
+<span>  <span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>scale_color_manual</a></span><span class='op'>(</span>values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>R <span class='op'>=</span> <span class='st'>"steelblue1"</span>, D <span class='op'>=</span> <span class='st'>"indianred1"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>congresssional_data_final</span><span class='op'>$</span><span class='va'>party_num</span>, <span class='va'>congresssional_data_final</span><span class='op'>$</span><span class='va'>crime</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>[1] 0.5393004</code></pre>
+</div>
+<p>But, if we look further at this data, we see that it is much more than just an increase in legislative activity, but additionally party in charge, that has an effect on the crime. It appears that a Republican Majority</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>congresssional_data_final</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>party</span>, y <span class='op'>=</span> <span class='va'>crime</span>, fill <span class='op'>=</span> <span class='va'>party</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_boxplot.html'>geom_boxplot</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    title <span class='op'>=</span> <span class='st'>"Distribution of Crime by Majority Party in Congress"</span>,</span>
+<span>    x <span class='op'>=</span> <span class='st'>"Majority Party"</span>,</span>
+<span>    y <span class='op'>=</span> <span class='st'>"Number of Crimes"</span></span>
+<span>  <span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>scale_fill_manual</a></span><span class='op'>(</span>values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>D <span class='op'>=</span> <span class='st'>"steelblue1"</span>, R <span class='op'>=</span> <span class='st'>"indianred1"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-10-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>model</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>congresssional_data_final</span>, <span class='va'>crime</span><span class='op'>~</span><span class='va'>party_num</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
 <span>  <span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>term</span>, est<span class='op'>=</span><span class='va'>estimate</span>, se<span class='op'>=</span> <span class='va'>std.error</span>, pval<span class='op'>=</span><span class='va'>p.value</span><span class='op'>)</span></span>
 <span></span>
@@ -1559,21 +1681,20 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">2.376</td>
-<td style="text-align: right;">0.307</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: right;">1475846.2</td>
+<td style="text-align: right;">54352.35</td>
+<td style="text-align: right;">0.00</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">congress</td>
-<td style="text-align: right;">-0.016</td>
-<td style="text-align: right;">0.003</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left;">party_num</td>
+<td style="text-align: right;">210772.6</td>
+<td style="text-align: right;">73593.43</td>
+<td style="text-align: right;">0.01</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>From the plot entitled “The Number of Bills that became law”, we can see that as the sessions Congress increase, the number of bills that become law decrease. In other words, in more recent years, there have been less Bills that have become law. From the Table, we can see that this relationship is significant, and that as the sessions of Congress increase, there is about a 2% decrase in bills that become law.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
