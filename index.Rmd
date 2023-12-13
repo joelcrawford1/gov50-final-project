@@ -9,14 +9,14 @@ output:
 
 
 
-## Project thoughts
+## Project Introduction
 
-I am interested in exploring data related to Congress and the efficacy of legislation in preventing crime. Do Republican lead Congress have less crime? Or do Democratic lead Congress' lead to less crime. I will predict that when Democrats are in the majority, there is less crime than when Republicans are in the majority. My sample is compromised of each of the 93rd - 115h Congress. My unit of analysis is a Congress. The explanatory variables of interest is the political party in charge. If the variable coded = 0, it would mean that the Republicans are in the majority party in Congress. If the variable coded = 1, it would means that Democrats are in charge. My outcome variable is the number of violent offenses during each particular Congress. If the variable coded were = 4000, this would mean that, there were 4000 violent offenses for every 100,000 people in the population. 
+I am interested in exploring data related to Congress and impact of political party on the unemployment rate.Does a Republican lead Congress have a lower unemployment rate ? Or do Democratic lead Congress' lead to a lower unemployment rate. I will predict that when Democrats are in the majority, there is a lower unemployment rate than when Republicans are in the majority. My sample is compromised of each of the 93rd - 115h Congress. My unit of analysis is a Congress. The explanatory variables of interest is the political party in charge. If the variable coded = 0, it would mean that the Republicans are in the majority party in Congress. If the variable coded = 1, it would means that Democrats are in charge. My outcome variable is the unemployment rate during each particular Congress. If the variable coded were = 4.1, this would mean that, the unemployment rate is 4.1%.
 
 
 To create this data, I had to merge data from two different places and essential create my own data set. I got the data regarding the party from the Brooking Institute, and I received the data regarding the crime rate in each session from the Federak Bureau of Investigation (FBI) Crime Data Explorer. 
 
-If I run my data, and it shows that when Republicans are in the majority, there is less crime, then my hypothesis would be wrong. But, if the data shows the there is more crime when Republicans are in office, then my hypothesis would be right. 
+If I run my data, and it shows that when Republicans are in the majority, there is a lower unemployment rate, then my hypothesis would be wrong. But, if the data shows the there is higher unemployment rate when Republicans are in office, then my hypothesis would be right. 
 
 ```{r}
 library(readr)
@@ -26,137 +26,131 @@ library(dplyr)
 library(readxl)
 library(ggplot2)
 ```
-
-
+## Loading Data
 
 ```{r}
+library(readxl)
+economic <- read_excel("~/Downloads/economic.xlsx", 
+    col_types = c("numeric", "numeric", "numeric"))
+
 
 library(readxl)
-congresssional_data_final <- read_excel("~/Downloads/congresssional data final.xlsx", 
-    col_types = c("numeric", "numeric", "numeric", 
-        "numeric", "numeric", "numeric", 
-        "numeric", "numeric", "numeric", 
-        "numeric", "text", "numeric", "numeric", 
-        "numeric", "numeric", "numeric", 
-        "numeric", "numeric", "numeric", 
-        "numeric"))
+congressional_ <- read_excel("~/Downloads/congressional .xlsx", 
+    col_types = c("numeric", "text", "numeric"))
 
 
 
-ggplot(congresssional_data_final, aes(x = party, y = crime, fill = party)) +
-  geom_bar(stat = "identity") +
-  labs(
-    title = "Comparison of Reported Crimes by Party in Charge",
-    x = "Party in Charge",
-    y = "Number Violent Crime Offenses
-    per 100,000 people"
-  ) +
-  scale_fill_manual(values = c(R = "steelblue1", D = "indianred1"))
+combined_data <- merge(economic, congressional_, by = "year", all = FALSE)
 
 ```
 
-Looking at this data, we see a graph that shows the amount of crime over the entire time period (93rd Congress to 115th Congress). It breaks the crime down based on the party that is in charge. On the left, we see the over the entire time period, the Republican majority saw way more violent crimes, than the Democratic majority. 
-
-```{r}
-cor(congresssional_data_final$party_num, congresssional_data_final$crime)
-```
-
-This calculation confirms a positive linear relationship between the party and the amount crime. In other words, when Democrats are in the majority (party_num = 1), there is more crime. But, when Republicans are in office (party_num = 0), there is less crime. 
 
 
-
-```{r}
-model<- lm(data = congresssional_data_final, crime~party_num)|>
-  broom::tidy()|>
-  select(term, est=estimate, se= std.error, pval=p.value)
-
-knitr::kable(model, digits=3, col.names = c("Variable", "Coefficient Estimate", "Standard Error", "P-Value"))
-```
-
-So, this graph shows us a few different things. First of all, the intercept is when party_num = 0, or when Republicans are in power. This graph shows us that when Republicans are in the majority, the estimated amount of crime is 1,475,862.2. The p-value is 0, meaning that this is statically significant.
-
-In addition, the graph tells us that when party_num = 1, or when Democrats are in power, there is estimated to be an increase of 210,772.6 cases of crime, compared to when Republicans are in power. The p-value of 0.01 tells us that this is statistically significant. 
-
-Overall, this graph shows us that when democrats are in power, it is estimated that there will be substantially more cases of crime. 
-
-
-
-Conclusion
-
-
-In conclusion, my hypothesis was incorrect. When democrats are in power, the data shows us that there tends to be more crime, as opposed to when Republicans are in power. In this data set, there are various limitations that I would fix if I had more data or more money. Mainly, I would like to look at the types of bills that are being passed by each party to see if they are directly working to decrease the amount of crime. In other words, are there specific bills that are being passed that can explain why a Republican majority has less crime. In addition, since it takes time for policies to set in, it might also be that the decreased crime is due to Democrat polices. We would need more data to see if the Republicans are intentionally doing things to decrease the crime, or if the crime is decreasing due to policies implemented prior to them taking the majority.  
-
-
-```{r}
-cor(congresssional_data_final$party_num, congresssional_data_final$crime)
-```
-
-
-
-
-
-```{r}
-ggplot(congresssional_data_final, aes(x = crime_rate, y = congress_in, color = party)) +
-  geom_point() +
-  labs(
-    title = "Scatter Plot of Crime and Party in Charge",
-    x = "Crime Reported",
-    y = "Congress Session"
-  ) +
-  scale_color_manual(values = c(R = "steelblue1", D = "indianred1"))
-
-```
-
-```{r}
-cor(congresssional_data_final$crime_rate, congresssional_data_final$congress_in)
-```
-
-
+## Unemployment Rate and Majority Party Boxplot
 
 ```{r}
 
-ggplot(congresssional_data_final, aes(x = congress_in, y = crime, color = party)) +
-  geom_point() +
-  labs(
-    title = "Relationship between Crime and Party in Charge in each Congress",
-    x = "Congress",
-    y = "Number of Crimes Reported"
-  ) +
-  scale_color_manual(values = c(R = "steelblue1", D = "indianred1"))
-
-```
-```{r}
-cor(congresssional_data_final$party_num, congresssional_data_final$crime)
-```
-
-But, if we look further at this data, we see that it is much more than just an increase in legislative activity, but additionally party in charge, that has an effect on the crime. It appears that a Republican Majority
-
-
-
-
-
-```{r}
-
-ggplot(congresssional_data_final, aes(x = party, y = crime, fill = party)) +
+ggplot(combined_data, aes(x = party, y = unemployment_num, fill = party)) +
   geom_boxplot() +
   labs(
-    title = "Distribution of Crime by Majority Party in Congress",
+    title = "Unemployment Rate by Majority Party",
     x = "Majority Party",
-    y = "Number of Crimes"
+    y = "Unemployment Rate"
   ) +
   scale_fill_manual(values = c(D = "steelblue1", R = "indianred1"))
 
 ```
 
 
+So, this graph plots the  unemployment rate of each party over 93rd to 115 Congressional Sessions. There are two plots, one for when the Democratic Party is in the majority, and one for when the Republican Party is in the majority. In each box, there is a thin black line. This line represents the median of the entire data set. As seen in the graph, the median unemployment rate when Democrats are in the majority is higher than the median unemployment rate when Republicans are in the majority. 
+
+The median is an important measure since there are more data points for when the Democratic Party is in power, than when the Republican Party is in power. This is represented on the graph by box itself being larger. For example, look at the Democratic box. It is much larger than the Republican box. Nevertheless, the median tells us the middle number to allow us to see where the center of the data set is. 
+
+Overall, the graph shows us that the median unemployment rate when Democrats are in the majority is higher than the median unemployment rate when Republicans are in the majority. 
+
+## Unemployment Rate and Majority Party Regression Table 
 
 ```{r}
-model<- lm(data = congresssional_data_final, crime~party_num)|>
+model<- lm(data = combined_data, unemployment_num~party_num)|>
   broom::tidy()|>
   select(term, est=estimate, se= std.error, pval=p.value)
 
-knitr::kable(model, digits=3, col.names = c("Variable", "Coefficeient Estimate", "Standard Error", "P-Value"))
+knitr::kable(model, digits=3, col.names = c("Variable", "Coefficient Estimate", "Standard Error", "P-Value"))
+```
+
+So, the intercept 5.141 represents the expected unemployment rate when party_num is 0, or Republican. When democrats are the majority (party_num = 1), the unemployment rate is expected to increase by .915 percent. The co-efficient is statically significant at the 0.05 level because the p-value is 0.02, This means that the unemployment rate associated with party affiliation is likely not due to random chance. 
+
+
+## Unemployment Rate and Majority Party Correlation Coeffiecent
+
+
+```{r}
+cor(combined_data$party_num, combined_data$unemployment_num)
+```
+
+A correlation coefficient of 0.26 represents a positive correlation between majority party affiliation and the unemployment rate. 0.26 represents a low, but positive, correlation meaning that on average, periods with Democratic majorities (when party_num = 1) have higher unemployment rates compared to periods when Republicans are in the majority. 
+
+## Unemployment and Inflation Rate 
+
+
+
+```{r}
+cor(combined_data$inflation, combined_data$unemployment_num)
+```
+Despite already seeing a correlation between the majority party and the unemployment rate, the data set also shows a correlation between the inflation rate and the unemployment rate. This analysis shows us that the relationship between the inflation rate and the unemployment rate is positive, but very small. In other words, there is a small positive correlation between the unemployment rate 
+
+## Unemployment and Inflation Rate Graph
+
+```{r}
+ggplot(combined_data, aes(x = year)) +
+  geom_line(aes(y = inflation, color = "Inflation Rate"), size = 1.2) +
+  geom_line(aes(y = unemployment_num, color = "Unemployment Rate"), size = 1.2) +
+  labs(
+    title = "Relationship Between Inflation Rate and Unemployment Rate Over Time",
+    x = "Year",
+    y = "Rate"
+  ) +
+  scale_color_manual(values = c("Inflation Rate" = "brown2", "Unemployment Rate" = "brown")) +
+  theme_minimal()
+```
+
+This graph plots the inflation rate over the years, compared to the unemployment rate over the years. At certain points in the graph (year 1970-2010), there appears to be a little overlap. The inflation rate seems to fluctuate in a similar way as the unemployment rate. 
+
+## Unemployment and Inflation Rate Regression Table 
+
+```{r}
+model<- lm(data = combined_data, unemployment_num~inflation)|>
+  broom::tidy()|>
+  select(term, est=estimate, se= std.error, pval=p.value)
+
+knitr::kable(model, digits=3, col.names = c("Variable", "Coefficient Estimate", "Standard Error", "P-Value"))
+```
+
+By looking at alternative relationships, this table shows us the relationship between inflation and the unemployment rate. As the inflation rate increases by one percent, we can expect the unemployment rate to increase by 0.048 percent. The p.value(0.472)  shows us, however, that this relationship is not statistically significant. 
+
+```{r}
+
+model<- lm(model <- lm(unemployment_num ~ party_num + inflation, data = combined_data))|>
+  broom::tidy()|>
+  select(term, est=estimate, se= std.error, pval=p.value)
+
+knitr::kable(model, digits=3, col.names = c("Variable", "Coefficient Estimate", "Standard Error", "P-Value"))
+
 ```
 
 
+
+This linear regression looks at the unemployment rate as the dependent variable and party_num and inflation as the independent variable. The graph tell us that .904 is the estimated change in the unemployment rate when as the party changes from Democrat to Republican. The p-value (0.027) tells us that the political party is statistically significant in predicting the unemployment rate.
+
+In addition, the chart tells us that when the inflation rate increases by one percent, the unemployment rate will increase by 0.007. The p-value is .919, meaning that this is not statistically significant.  
+
+
+
+
+## Conclusion 
+In conclusion, there appears to be a statistically significant relationship between the party in charge and the unemployment rate. When democrats are in office, on average, there an increase in the unemployment rate. Some limitations of my data is the lack of information as to why this might be the case. Some good data to add would be the amount and of legislation passed by each party, to see if there is a relationship between the amount of legislation passed and the unemployment rate. In addition, since legislation often takes time to actually be implemented, it could be the case that the unemployment rate when Republicans are in office is actually only occurring as a result of the legislation inacted by the prior administration. In other words, it might be that the Republican Party has nothing to do with their apparent low unemployment rate. 
+
+
+
+----------------------------------------------------------------------------------------
 
