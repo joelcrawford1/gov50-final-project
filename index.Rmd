@@ -51,7 +51,7 @@ combined_data <- merge(economic, congressional_, by = "year", all = FALSE)
 
 ```{r}
 
-ggplot(combined_data, aes(x = party_num, y = unemployment_num, fill = party_affiliation)) +
+ggplot(combined_data, aes(x = party_affiliation, y = unemployment_num, fill = party_affiliation)) +
   geom_boxplot() +
   labs(
     title = "Unemployment Rate by Majority Party",
