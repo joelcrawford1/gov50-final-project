@@ -11,10 +11,10 @@ output:
 
 ## Project Introduction
 
-I am interested in exploring data related to Congress and impact of political party on the unemployment rate.Does a Republican lead Congress have a lower unemployment rate ? Or do Democratic lead Congress' lead to a lower unemployment rate. I will predict that when Democrats are in the majority, there is a lower unemployment rate than when Republicans are in the majority. My sample is compromised of each of the 93rd - 115h Congress. My unit of analysis is a Congress. The explanatory variables of interest is the political party in charge. If the variable coded = 0, it would mean that the Republicans are in the majority party in Congress. If the variable coded = 1, it would means that Democrats are in charge. My outcome variable is the unemployment rate during each particular Congress. If the variable coded were = 4.1, this would mean that, the unemployment rate is 4.1%.
+I am interested in exploring data related to Congress and impact of political party on the unemployment rate. Does a Republican majority in Congress lead to a lower unemployment rate ? Or does a Democratic majority in Congress' lead to a lower unemployment rate. I will predict that when Democrats are in the majority, there is a lower unemployment rate than when Republicans are in the majority. My sample is compromised of each of the 93rd - 115h Congress. My unit of analysis is a session of congress. The explanatory variables of interest is the political party in charge. If the variable coded = 0, it would mean that the Republicans are in the majority party in Congress. If the variable coded = 1, it would means that Democrats are in charge. My outcome variable is the unemployment rate during each particular Congress. If the variable coded were = 4.1, this would mean that the unemployment rate is 4.1%.
 
 
-To create this data, I had to merge data from two different places and essential create my own data set. I got the data regarding the party from the Brooking Institute, and I received the data regarding the crime rate in each session from the Federak Bureau of Investigation (FBI) Crime Data Explorer. 
+To create this data, I had to merge data from two different places. I got the data regarding the party from the Brooking Institute, and I received the data regarding the unemployment and inflation rate from the Federal Reserve. 
 
 If I run my data, and it shows that when Republicans are in the majority, there is a lower unemployment rate, then my hypothesis would be wrong. But, if the data shows the there is higher unemployment rate when Republicans are in office, then my hypothesis would be right. 
 
@@ -26,6 +26,7 @@ library(dplyr)
 library(readxl)
 library(ggplot2)
 ```
+
 ## Loading Data
 
 ```{r}
@@ -50,7 +51,7 @@ combined_data <- merge(economic, congressional_, by = "year", all = FALSE)
 
 ```{r}
 
-ggplot(combined_data, aes(x = party, y = unemployment_num, fill = party)) +
+ggplot(combined_data, aes(x = party_num, y = unemployment_num, fill = party_affiliation)) +
   geom_boxplot() +
   labs(
     title = "Unemployment Rate by Majority Party",
@@ -58,6 +59,7 @@ ggplot(combined_data, aes(x = party, y = unemployment_num, fill = party)) +
     y = "Unemployment Rate"
   ) +
   scale_fill_manual(values = c(D = "steelblue1", R = "indianred1"))
+
 
 ```
 
@@ -140,15 +142,16 @@ knitr::kable(model, digits=3, col.names = c("Variable", "Coefficient Estimate", 
 
 
 
-This linear regression looks at the unemployment rate as the dependent variable and party_num and inflation as the independent variable. The graph tell us that .904 is the estimated change in the unemployment rate when as the party changes from Democrat to Republican. The p-value (0.027) tells us that the political party is statistically significant in predicting the unemployment rate.
 
-In addition, the chart tells us that when the inflation rate increases by one percent, the unemployment rate will increase by 0.007. The p-value is .919, meaning that this is not statistically significant.  
+This is a  linear regression table. This linear regression looks at the unemployment rate as the dependent variable and party_num and inflation as the independent variables. The graph tell us that .904 is the estimated change in the unemployment rate when as the party changes from Democrat to Republican, while controlling for the inflation rate. The p-value (0.027) tells us that the political party is statistically significant in predicting the unemployment rate. 
+
+In addition, the chart tells us that when the inflation rate increases by one percent, the unemployment rate will increase by 0.007. This data holds the unemployment rate constant. The p-value is .919, meaning that this is not statistically significant, and not a good predictor. 
 
 
 
 
 ## Conclusion 
-In conclusion, there appears to be a statistically significant relationship between the party in charge and the unemployment rate. When democrats are in office, on average, there an increase in the unemployment rate. Some limitations of my data is the lack of information as to why this might be the case. Some good data to add would be the amount and of legislation passed by each party, to see if there is a relationship between the amount of legislation passed and the unemployment rate. In addition, since legislation often takes time to actually be implemented, it could be the case that the unemployment rate when Republicans are in office is actually only occurring as a result of the legislation inacted by the prior administration. In other words, it might be that the Republican Party has nothing to do with their apparent low unemployment rate. 
+In conclusion, there appears to be a statistically significant relationship between the party in charge and the unemployment rate. When democrats are in office, on average, there an increase in the unemployment rate. Some limitations of my data is the lack of information as to why this might be the case. Some good data to add would be the amount and of legislation passed by each party, to see if there is a relationship between the amount of legislation passed and the unemployment rate. In addition, since legislation often takes time to actually be implemented, it could be the case that the unemployment rate when Republicans are in office is actually only occurring as a result of the legislation enacted by the prior administration. In other words, it might be that the Republican Party has nothing to do with their apparent low unemployment rate. 
 
 
 
