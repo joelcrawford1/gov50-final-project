@@ -11,7 +11,7 @@ output:
 
 ## Project Introduction
 
-I am interested in exploring data related to Congress and impact of political party on the unemployment rate. Does a Republican majority in Congress lead to a lower unemployment rate ? Or does a Democratic majority in Congress' lead to a lower unemployment rate. I will predict that when Democrats are in the majority, there is a lower unemployment rate than when Republicans are in the majority. My sample is compromised of each of the 93rd - 115h Congress. My unit of analysis is a session of congress. The explanatory variables of interest is the political party in charge. If the variable coded = 0, it would mean that the Republicans are in the majority party in Congress. If the variable coded = 1, it would means that Democrats are in charge. My outcome variable is the unemployment rate during each particular Congress. If the variable coded were = 4.1, this would mean that the unemployment rate is 4.1%.
+I am interested in exploring data related to Congress and impact of political party on the unemployment rate. Does a Republican majority in Congress lead to a lower unemployment rate ? Or does a Democratic majority in Congress' lead to a lower unemployment rate. I will predict that when Democrats are in the majority, there is a lower unemployment rate than when Republicans are in the majority. My sample is compromised of each of the year 1948-2022. My unit of analysis is a year. The explanatory variables of interest is the political party in charge. If the variable coded = 0, it would mean that the Republicans are in the majority party in Congress. If the variable coded = 1, it would means that Democrats are in charge. My outcome variable is the unemployment rate during each particular Congress. If the variable coded were = 4.1, this would mean that the unemployment rate is 4.1%.
 
 
 To create this data, I had to merge data from two different places. I got the data regarding the party from the Brooking Institute, and I received the data regarding the unemployment and inflation rate from the Federal Reserve. 
@@ -43,15 +43,30 @@ congressional_ <- read_excel("~/Downloads/congressional .xlsx",
 
 combined_data <- merge(economic, congressional_, by = "year", all = FALSE)
 
+
+names(combined_data)[names(combined_data) == "party_affiliation"] <- "Party_Majority"
+
 ```
 
+## Visualising the Dataset
 
+```{r}
+ggplot(combined_data, aes(x = year, y = unemployment_num, fill = Party_Majority)) +
+  geom_col() +
+  labs(
+    title = "Unemployment Rate by Majority Party",
+    x = "Year",
+    y = "Unemployment Rate"
+  ) +
+  scale_fill_manual(values = c(D = "steelblue1", R = "indianred1"))
+```
+This graph looks at the the entire data set. It shows the years that we are looking at and the unemployment rate in each year. The color corresponds to the majority party in office. 
 
 ## Unemployment Rate and Majority Party Boxplot
 
 ```{r}
 
-ggplot(combined_data, aes(x = party_affiliation, y = unemployment_num, fill = party_affiliation)) +
+ggplot(combined_data, aes(x = Party_Majority, y = unemployment_num, fill = Party_Majority)) +
   geom_boxplot() +
   labs(
     title = "Unemployment Rate by Majority Party",
@@ -64,44 +79,37 @@ ggplot(combined_data, aes(x = party_affiliation, y = unemployment_num, fill = pa
 ```
 
 
-So, this graph plots the  unemployment rate of each party over 93rd to 115 Congressional Sessions. There are two plots, one for when the Democratic Party is in the majority, and one for when the Republican Party is in the majority. In each box, there is a thin black line. This line represents the median of the entire data set. As seen in the graph, the median unemployment rate when Democrats are in the majority is higher than the median unemployment rate when Republicans are in the majority. 
+So, this graph plots the unemployment rate of each party over 93rd to 115 Congressional Sessions. There are two boxes, one for when the Democratic Party is in the majority, and one for when the Republican Party is in the majority. In each box, there is a thin black line. This line represents the median of the entire data set. As seen in the graph, the median unemployment rate when Democrats are in the majority is higher than the median unemployment rate when Republicans are in the majority. 
 
-The median is an important measure since there are more data points for when the Democratic Party is in power, than when the Republican Party is in power. This is represented on the graph by box itself being larger. For example, look at the Democratic box. It is much larger than the Republican box. Nevertheless, the median tells us the middle number to allow us to see where the center of the data set is. 
+The median is an important measure since there are more data points for when the Democratic Party is in power, than when the Republican Party is in power. This is represented on the blue box itself being larger than the red box, indicated a larger amount of data points for when the Democrats are in the majority. Nevertheless, the median tells us the middle number to allow us to see where the center of the data set is.
 
 Overall, the graph shows us that the median unemployment rate when Democrats are in the majority is higher than the median unemployment rate when Republicans are in the majority. 
 
 ## Unemployment Rate and Majority Party Regression Table 
 
-```{r}
-model<- lm(data = combined_data, unemployment_num~party_num)|>
-  broom::tidy()|>
-  select(term, est=estimate, se= std.error, pval=p.value)
-
-knitr::kable(model, digits=3, col.names = c("Variable", "Coefficient Estimate", "Standard Error", "P-Value"))
-```
-
-So, the intercept 5.141 represents the expected unemployment rate when party_num is 0, or Republican. When democrats are the majority (party_num = 1), the unemployment rate is expected to increase by .915 percent. The co-efficient is statically significant at the 0.05 level because the p-value is 0.02, This means that the unemployment rate associated with party affiliation is likely not due to random chance. 
-
-
-## Unemployment Rate and Majority Party Correlation Coeffiecent
 
 
 ```{r}
-cor(combined_data$party_num, combined_data$unemployment_num)
+regression_unemployment <- lm(unemployment_num ~ party_num, data = combined_data)
+
+varnames1 <- c("(Intercept)" = "Intercept",
+               "party_num" = "Majority Party")
+
+modelsummary::modelsummary(regression_unemployment, statistic = "p.value", 
+                           gof_map = c("nobs", "r.squared", "adj.r.squared"),coef_map = varnames1)
+                           
 ```
 
-A correlation coefficient of 0.26 represents a positive correlation between majority party affiliation and the unemployment rate. 0.26 represents a low, but positive, correlation meaning that on average, periods with Democratic majorities (when party_num = 1) have higher unemployment rates compared to periods when Republicans are in the majority. 
-
-## Unemployment and Inflation Rate 
 
 
+So, the intercept 5.141 represents the expected unemployment rate when party_num is 0, or Republican. When democrats are the majority (party_num = 1), the unemployment rate is expected to be.915 percentage points higher than when republicans are in the majority. The co-efficient is statically significant at the 0.05 level because the p-value is 0.02. This means that the unemployment rate associated with party affiliation is likely not due to random chance. 
 
-```{r}
-cor(combined_data$inflation, combined_data$unemployment_num)
-```
-Despite already seeing a correlation between the majority party and the unemployment rate, the data set also shows a correlation between the inflation rate and the unemployment rate. This analysis shows us that the relationship between the inflation rate and the unemployment rate is positive, but very small. In other words, there is a small positive correlation between the unemployment rate 
+The square root of the R^2 value is 0.268. A correlation coefficient of 0.26 represents a positive correlation between majority party affiliation and the unemployment rate. 0.268 represents a low, but positive, correlation meaning that on average, periods with Democratic majorities in Congress (when party_num = 1) have higher unemployment rates compared to periods when Republicans are in the majority. 
 
-## Unemployment and Inflation Rate Graph
+Despite this being true, however, there could also be reverse causality. It might be that as the unemployment rate decreases, people elect a certain party to the majority as a result. So, despite being statistically significant, this relationship might not be causally significant. 
+
+
+## Unemployment and Inflation Rate  
 
 ```{r}
 ggplot(combined_data, aes(x = year)) +
@@ -116,22 +124,32 @@ ggplot(combined_data, aes(x = year)) +
   theme_minimal()
 ```
 
-This graph plots the inflation rate over the years, compared to the unemployment rate over the years. At certain points in the graph (year 1970-2010), there appears to be a little overlap. The inflation rate seems to fluctuate in a similar pattern as the unemployment rate, but not really that much. 
+
+Despite already seeing a correlation between the majority party and the unemployment rate, the data set also shows a correlation between the inflation rate and the unemployment rate. This graph plots the inflation rate over the years, compared to the unemployment rate over the years. At certain points in the graph (year 1970-2010), there appears to be a little overlap. The inflation rate seems to fluctuate in a similar pattern as the unemployment rate, but not really that much. 
 
 ## Unemployment and Inflation Rate Regression Table 
 
 ```{r}
-model<- lm(data = combined_data, unemployment_num~inflation)|>
-  broom::tidy()|>
-  select(term, est=estimate, se= std.error, pval=p.value)
+regression_inflation <- lm(unemployment_num ~ inflation, data = combined_data)
 
-knitr::kable(model, digits=3, col.names = c("Variable", "Coefficient Estimate", "Standard Error", "P-Value"))
+varnames1 <- c("(Intercept)" = "Intercept",
+               "inflation" = "Inflation Rate")
+
+modelsummary::modelsummary(regression_inflation, statistic = "p.value", 
+                           gof_map = c("nobs", "r.squared", "adj.r.squared"),coef_map = varnames1)
 ```
 
-By looking at alternative relationships, this table shows us the relationship between inflation and the unemployment rate. As the inflation rate increases by one percent, we can expect the unemployment rate to increase by 0.048 percent. The p.value(0.472)  shows us, however, that this relationship is not statistically significant. 
+
+This analysis shows us that the relationship between the inflation rate and the unemployment rate is positive, but very small. In other words, there is a small positive correlation between the inflation rate and the unemployment rate.
+
+The intercept tells us the estimated value of the unemployment rate (5.569), when inflation is at zero. The p-value tells us tht this intercept is statistically significant. 
+
+More importantly, this chart tells us that as the inflation rate increases by one percentage point, we can expect the unemployment rate to increase by 0.048 percentage points. The p.value(0.472) shows us, however, that this relationship is not statistically significant. The data tells us that the there not either not enough information, or there is not correlation, between inflation rate and unemployment rate. In other words, there appears to be no impact of the inflation rate on the unemployment rate.
+
+
+
 
 ```{r}
-
 model<- lm(model <- lm(unemployment_num ~ party_num + inflation, data = combined_data))|>
   broom::tidy()|>
   select(term, est=estimate, se= std.error, pval=p.value)
@@ -142,18 +160,18 @@ knitr::kable(model, digits=3, col.names = c("Variable", "Coefficient Estimate", 
 
 
 
+This is a  linear regression table. This linear regression looks at the unemployment rate as the dependent variable and both the political party in the majority and inflation rate as the independent variables. The graph tell us that .904 is the estimated change in the unemployment rate when as the party changes from Democrat to Republican, while controlling for the inflation rate by keeping it constant. The p-value (0.027) tells us that the political party is statistically significant in predicting the unemployment rate. 
 
-This is a  linear regression table. This linear regression looks at the unemployment rate as the dependent variable and party_num and inflation as the independent variables. The graph tell us that .904 is the estimated change in the unemployment rate when as the party changes from Democrat to Republican, while controlling for the inflation rate by keeoing it constant. The p-value (0.027) tells us that the political party is statistically significant in predicting the unemployment rate. 
-
-In addition, the chart tells us that when the inflation rate increases by one percent, the unemployment rate will increase by 0.007. This data controls for the unemployment rate by keeping it constant. However, the p-value is .919, meaning that this is not statistically significant, and not a good predictor. 
-
+In addition, the chart tells us that when the inflation rate increases by one percentage point, the unemployment rate will increase by 0.007 percentage points. This data controls for the unemployment rate by keeping it constant. However, the p-value is .919, meaning that the relationship between inflation rate and the unemployment rate is not statistically significant, meaning that the inflation rate is not a good predictor of the unemployment rate. 
 
 
 
 ## Conclusion 
-In conclusion, there appears to be a statistically significant relationship between the party in charge and the unemployment rate. When democrats are the majority in office, on average, the unemployment rate in higher than the unemployment rate when Republicans are in office. This goes against my hypothesis, as I thought that when democrats were in the majority party in Congress, the unemployment rate would be much lower. In addition, my data also shows that although there is a small, positive correlation betwen unemployment rate and inflation rate, this relationship is not significantly signficant. 
+In conclusion, there appears to be a statistically significant relationship between the party in charge and the unemployment rate. When democrats are the majority in office, on average, the unemployment rate in higher than the unemployment rate when Republicans are in office. This goes against my hypothesis, as I thought that when democrats were in the majority party in Congress, the unemployment rate would be much lower. In addition, my data also shows that although there appears to be a small, positive correlation between unemployment rate and inflation rate, this relationship is not significantly significant. 
 
-Some limitations of my data is the lack of information as to why this might be the case. Some good data to add would be the amount and of legislation passed by each party, to see if there is a relationship between the amount of legislation passed and the unemployment rate. In addition, since legislation often takes time to actually be implemented, it could be the case that the unemployment rate when Republicans are in office is actually only occurring as a result of the legislation enacted by the prior administration. In other words, it might be that the Republican Party has nothing to do with their apparent low unemployment rate. 
+Some limitations of my data is the lack of information as to why this might be the case. Some good data to add would be the amount and of legislation passed by each party when they are in the majority, to see if there is a relationship between the amount of legislation passed and the unemployment rate. In addition, it would be helpful to see the types of legislation that is being passed when each party is in the majority to see if there is a way to explain the unemployment rate. I think some additional variables to look at could be job creation and other types of fiscal policies. 
+
+In addition, since legislation often takes time to actually be implemented, it could be the case that the unemployment rate when Republicans are in office is actually only occurring as a result of the legislation enacted by the prior administration. In other words, it might be that the Republican Party has nothing to do with their apparent low unemployment rate. 
 
 
 

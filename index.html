@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["CONGRESS DATA .csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-1-1.png","index_files/figure-html5/unnamed-chunk-10-1.png","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/figure-html5/unnamed-chunk-6-1.png","index_files/figure-html5/unnamed-chunk-7-1.png","index_files/figure-html5/unnamed-chunk-8-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js","UCONGRESS DATA.csv"]}
+  {"type":"character","attributes":{},"value":["CONGRESS DATA .csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-1-1.png","index_files/figure-html5/unnamed-chunk-10-1.png","index_files/figure-html5/unnamed-chunk-2-1.png","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/figure-html5/unnamed-chunk-6-1.png","index_files/figure-html5/unnamed-chunk-7-1.png","index_files/figure-html5/unnamed-chunk-8-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.24/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/kePrint-0.0.1/kePrint.js","index_files/lightable-0.0.1/lightable.css","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js","UCONGRESS DATA.csv"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1473,6 +1473,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
   <!--/radix_placeholder_distill-->
   <script src="index_files/header-attrs-2.24/header-attrs.js"></script>
+  <script src="index_files/kePrint-0.0.1/kePrint.js"></script>
+  <link href="index_files/lightable-0.0.1/lightable.css" rel="stylesheet" />
   <script src="index_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
   <script src="index_files/popper-2.6.0/popper.min.js"></script>
   <link href="index_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -1518,7 +1520,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 <div class="d-article">
 <h2 id="project-introduction">Project Introduction</h2>
-<p>I am interested in exploring data related to Congress and impact of political party on the unemployment rate. Does a Republican majority in Congress lead to a lower unemployment rate ? Or does a Democratic majority in Congress’ lead to a lower unemployment rate. I will predict that when Democrats are in the majority, there is a lower unemployment rate than when Republicans are in the majority. My sample is compromised of each of the 93rd - 115h Congress. My unit of analysis is a session of congress. The explanatory variables of interest is the political party in charge. If the variable coded = 0, it would mean that the Republicans are in the majority party in Congress. If the variable coded = 1, it would means that Democrats are in charge. My outcome variable is the unemployment rate during each particular Congress. If the variable coded were = 4.1, this would mean that the unemployment rate is 4.1%.</p>
+<p>I am interested in exploring data related to Congress and impact of political party on the unemployment rate. Does a Republican majority in Congress lead to a lower unemployment rate ? Or does a Democratic majority in Congress’ lead to a lower unemployment rate. I will predict that when Democrats are in the majority, there is a lower unemployment rate than when Republicans are in the majority. My sample is compromised of each of the year 1948-2022. My unit of analysis is a year. The explanatory variables of interest is the political party in charge. If the variable coded = 0, it would mean that the Republicans are in the majority party in Congress. If the variable coded = 1, it would means that Democrats are in charge. My outcome variable is the unemployment rate during each particular Congress. If the variable coded were = 4.1, this would mean that the unemployment rate is 4.1%.</p>
 <p>To create this data, I had to merge data from two different places. I got the data regarding the party from the Brooking Institute, and I received the data regarding the unemployment and inflation rate from the Federal Reserve.</p>
 <p>If I run my data, and it shows that when Republicans are in the majority, there is a lower unemployment rate, then my hypothesis would be wrong. But, if the data shows the there is higher unemployment rate when Republicans are in office, then my hypothesis would be right.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -1545,13 +1547,31 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span></span>
 <span></span>
 <span></span>
-<span><span class='va'>combined_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/merge.html'>merge</a></span><span class='op'>(</span><span class='va'>economic</span>, <span class='va'>congressional_</span>, by <span class='op'>=</span> <span class='st'>"year"</span>, all <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span></code></pre>
+<span><span class='va'>combined_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/merge.html'>merge</a></span><span class='op'>(</span><span class='va'>economic</span>, <span class='va'>congressional_</span>, by <span class='op'>=</span> <span class='st'>"year"</span>, all <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span></span>
+<span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>combined_data</span><span class='op'>)</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>combined_data</span><span class='op'>)</span> <span class='op'>==</span> <span class='st'>"party_affiliation"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='st'>"Party_Majority"</span></span></code></pre>
 </div>
 </div>
+<h2 id="visualising-the-dataset">Visualising the Dataset</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>combined_data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>year</span>, y <span class='op'>=</span> <span class='va'>unemployment_num</span>, fill <span class='op'>=</span> <span class='va'>Party_Majority</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
+<span>    title <span class='op'>=</span> <span class='st'>"Unemployment Rate by Majority Party"</span>,</span>
+<span>    x <span class='op'>=</span> <span class='st'>"Year"</span>,</span>
+<span>    y <span class='op'>=</span> <span class='st'>"Unemployment Rate"</span></span>
+<span>  <span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>scale_fill_manual</a></span><span class='op'>(</span>values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>D <span class='op'>=</span> <span class='st'>"steelblue1"</span>, R <span class='op'>=</span> <span class='st'>"indianred1"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
+</div>
+<p>This graph looks at the the entire data set. It shows the years that we are looking at and the unemployment rate in each year. The color corresponds to the majority party in office.</p>
 <h2 id="unemployment-rate-and-majority-party-boxplot">Unemployment Rate and Majority Party Boxplot</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>combined_data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>party_affiliation</span>, y <span class='op'>=</span> <span class='va'>unemployment_num</span>, fill <span class='op'>=</span> <span class='va'>party_affiliation</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>combined_data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>Party_Majority</span>, y <span class='op'>=</span> <span class='va'>unemployment_num</span>, fill <span class='op'>=</span> <span class='va'>Party_Majority</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_boxplot.html'>geom_boxplot</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
 <span>    title <span class='op'>=</span> <span class='st'>"Unemployment Rate by Majority Party"</span>,</span>
@@ -1560,63 +1580,94 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span>  <span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>scale_fill_manual</a></span><span class='op'>(</span>values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>D <span class='op'>=</span> <span class='st'>"steelblue1"</span>, R <span class='op'>=</span> <span class='st'>"indianred1"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
+<p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
 </div>
-<p>So, this graph plots the unemployment rate of each party over 93rd to 115 Congressional Sessions. There are two plots, one for when the Democratic Party is in the majority, and one for when the Republican Party is in the majority. In each box, there is a thin black line. This line represents the median of the entire data set. As seen in the graph, the median unemployment rate when Democrats are in the majority is higher than the median unemployment rate when Republicans are in the majority.</p>
-<p>The median is an important measure since there are more data points for when the Democratic Party is in power, than when the Republican Party is in power. This is represented on the graph by box itself being larger. For example, look at the Democratic box. It is much larger than the Republican box. Nevertheless, the median tells us the middle number to allow us to see where the center of the data set is.</p>
+<p>So, this graph plots the unemployment rate of each party over 93rd to 115 Congressional Sessions. There are two boxes, one for when the Democratic Party is in the majority, and one for when the Republican Party is in the majority. In each box, there is a thin black line. This line represents the median of the entire data set. As seen in the graph, the median unemployment rate when Democrats are in the majority is higher than the median unemployment rate when Republicans are in the majority.</p>
+<p>The median is an important measure since there are more data points for when the Democratic Party is in power, than when the Republican Party is in power. This is represented on the blue box itself being larger than the red box, indicated a larger amount of data points for when the Democrats are in the majority. Nevertheless, the median tells us the middle number to allow us to see where the center of the data set is.</p>
 <p>Overall, the graph shows us that the median unemployment rate when Democrats are in the majority is higher than the median unemployment rate when Republicans are in the majority.</p>
 <h2 id="unemployment-rate-and-majority-party-regression-table">Unemployment Rate and Majority Party Regression Table</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>model</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>combined_data</span>, <span class='va'>unemployment_num</span><span class='op'>~</span><span class='va'>party_num</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>term</span>, est<span class='op'>=</span><span class='va'>estimate</span>, se<span class='op'>=</span> <span class='va'>std.error</span>, pval<span class='op'>=</span><span class='va'>p.value</span><span class='op'>)</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>regression_unemployment</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>unemployment_num</span> <span class='op'>~</span> <span class='va'>party_num</span>, data <span class='op'>=</span> <span class='va'>combined_data</span><span class='op'>)</span></span>
 <span></span>
-<span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>model</span>, digits<span class='op'>=</span><span class='fl'>3</span>, col.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Variable"</span>, <span class='st'>"Coefficient Estimate"</span>, <span class='st'>"Standard Error"</span>, <span class='st'>"P-Value"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+<span><span class='va'>varnames1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"(Intercept)"</span> <span class='op'>=</span> <span class='st'>"Intercept"</span>,</span>
+<span>               <span class='st'>"party_num"</span> <span class='op'>=</span> <span class='st'>"Majority Party"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'>modelsummary</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/modelsummary/man/modelsummary.html'>modelsummary</a></span><span class='op'>(</span><span class='va'>regression_unemployment</span>, statistic <span class='op'>=</span> <span class='st'>"p.value"</span>, </span>
+<span>                           gof_map <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"nobs"</span>, <span class='st'>"r.squared"</span>, <span class='st'>"adj.r.squared"</span><span class='op'>)</span>,coef_map <span class='op'>=</span> <span class='va'>varnames1</span><span class='op'>)</span></span></code></pre>
 </div>
-<table>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
-<tr class="header">
-<th style="text-align: left;">Variable</th>
-<th style="text-align: right;">Coefficient Estimate</th>
-<th style="text-align: right;">Standard Error</th>
-<th style="text-align: right;">P-Value</th>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+ (1)
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">5.142</td>
-<td style="text-align: right;">0.310</td>
-<td style="text-align: right;">0.00</td>
+<tr>
+<td style="text-align:left;">
+Intercept
+</td>
+<td style="text-align:center;">
+5.142
+</td>
 </tr>
-<tr class="even">
-<td style="text-align: left;">party_num</td>
-<td style="text-align: right;">0.915</td>
-<td style="text-align: right;">0.383</td>
-<td style="text-align: right;">0.02</td>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(&lt;0.001)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Majority Party
+</td>
+<td style="text-align:center;">
+0.915
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1.5px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1.5px">
+(0.020)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+75
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.072
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.060
+</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>So, the intercept 5.141 represents the expected unemployment rate when party_num is 0, or Republican. When democrats are the majority (party_num = 1), the unemployment rate is expected to increase by .915 percent. The co-efficient is statically significant at the 0.05 level because the p-value is 0.02, This means that the unemployment rate associated with party affiliation is likely not due to random chance.</p>
-<h2 id="unemployment-rate-and-majority-party-correlation-coeffiecent">Unemployment Rate and Majority Party Correlation Coeffiecent</h2>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>combined_data</span><span class='op'>$</span><span class='va'>party_num</span>, <span class='va'>combined_data</span><span class='op'>$</span><span class='va'>unemployment_num</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>[1] 0.2691417</code></pre>
-</div>
-<p>A correlation coefficient of 0.26 represents a positive correlation between majority party affiliation and the unemployment rate. 0.26 represents a low, but positive, correlation meaning that on average, periods with Democratic majorities (when party_num = 1) have higher unemployment rates compared to periods when Republicans are in the majority.</p>
+<p>So, the intercept 5.141 represents the expected unemployment rate when party_num is 0, or Republican. When democrats are the majority (party_num = 1), the unemployment rate is expected to be.915 percentage points higher than when republicans are in the majority. The co-efficient is statically significant at the 0.05 level because the p-value is 0.02. This means that the unemployment rate associated with party affiliation is likely not due to random chance.</p>
+<p>The square root of the R^2 value is 0.268. A correlation coefficient of 0.26 represents a positive correlation between majority party affiliation and the unemployment rate. 0.268 represents a low, but positive, correlation meaning that on average, periods with Democratic majorities in Congress (when party_num = 1) have higher unemployment rates compared to periods when Republicans are in the majority.</p>
+<p>Despite this being true, however, there could also be reverse causality. It might be that as the unemployment rate decreases, people elect a certain party to the majority as a result. So, despite being statistically significant, this relationship might not be causally significant.</p>
 <h2 id="unemployment-and-inflation-rate">Unemployment and Inflation Rate</h2>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>combined_data</span><span class='op'>$</span><span class='va'>inflation</span>, <span class='va'>combined_data</span><span class='op'>$</span><span class='va'>unemployment_num</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code>[1] 0.08426532</code></pre>
-</div>
-<p>Despite already seeing a correlation between the majority party and the unemployment rate, the data set also shows a correlation between the inflation rate and the unemployment rate. This analysis shows us that the relationship between the inflation rate and the unemployment rate is positive, but very small. In other words, there is a small positive correlation between the unemployment rate</p>
-<h2 id="unemployment-and-inflation-rate-graph">Unemployment and Inflation Rate Graph</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>combined_data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>year</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
@@ -1630,44 +1681,91 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_manual.html'>scale_color_manual</a></span><span class='op'>(</span>values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Inflation Rate"</span> <span class='op'>=</span> <span class='st'>"brown2"</span>, <span class='st'>"Unemployment Rate"</span> <span class='op'>=</span> <span class='st'>"brown"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span><span class='op'>(</span><span class='op'>)</span></span></code></pre>
 </div>
-<p><img src="index_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
+<p><img src="index_files/figure-html5/unnamed-chunk-6-1.png" width="624" /></p>
 </div>
-<p>This graph plots the inflation rate over the years, compared to the unemployment rate over the years. At certain points in the graph (year 1970-2010), there appears to be a little overlap. The inflation rate seems to fluctuate in a similar pattern as the unemployment rate, but not really that much.</p>
+<p>Despite already seeing a correlation between the majority party and the unemployment rate, the data set also shows a correlation between the inflation rate and the unemployment rate. This graph plots the inflation rate over the years, compared to the unemployment rate over the years. At certain points in the graph (year 1970-2010), there appears to be a little overlap. The inflation rate seems to fluctuate in a similar pattern as the unemployment rate, but not really that much.</p>
 <h2 id="unemployment-and-inflation-rate-regression-table">Unemployment and Inflation Rate Regression Table</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>model</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>combined_data</span>, <span class='va'>unemployment_num</span><span class='op'>~</span><span class='va'>inflation</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>term</span>, est<span class='op'>=</span><span class='va'>estimate</span>, se<span class='op'>=</span> <span class='va'>std.error</span>, pval<span class='op'>=</span><span class='va'>p.value</span><span class='op'>)</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>regression_inflation</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>unemployment_num</span> <span class='op'>~</span> <span class='va'>inflation</span>, data <span class='op'>=</span> <span class='va'>combined_data</span><span class='op'>)</span></span>
 <span></span>
-<span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>model</span>, digits<span class='op'>=</span><span class='fl'>3</span>, col.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Variable"</span>, <span class='st'>"Coefficient Estimate"</span>, <span class='st'>"Standard Error"</span>, <span class='st'>"P-Value"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+<span><span class='va'>varnames1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"(Intercept)"</span> <span class='op'>=</span> <span class='st'>"Intercept"</span>,</span>
+<span>               <span class='st'>"inflation"</span> <span class='op'>=</span> <span class='st'>"Inflation Rate"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'>modelsummary</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/modelsummary/man/modelsummary.html'>modelsummary</a></span><span class='op'>(</span><span class='va'>regression_inflation</span>, statistic <span class='op'>=</span> <span class='st'>"p.value"</span>, </span>
+<span>                           gof_map <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"nobs"</span>, <span class='st'>"r.squared"</span>, <span class='st'>"adj.r.squared"</span><span class='op'>)</span>,coef_map <span class='op'>=</span> <span class='va'>varnames1</span><span class='op'>)</span></span></code></pre>
 </div>
-<table>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
-<tr class="header">
-<th style="text-align: left;">Variable</th>
-<th style="text-align: right;">Coefficient Estimate</th>
-<th style="text-align: right;">Standard Error</th>
-<th style="text-align: right;">P-Value</th>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+ (1)
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">5.569</td>
-<td style="text-align: right;">0.302</td>
-<td style="text-align: right;">0.000</td>
+<tr>
+<td style="text-align:left;">
+Intercept
+</td>
+<td style="text-align:center;">
+5.569
+</td>
 </tr>
-<tr class="even">
-<td style="text-align: left;">inflation</td>
-<td style="text-align: right;">0.048</td>
-<td style="text-align: right;">0.067</td>
-<td style="text-align: right;">0.472</td>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(&lt;0.001)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Inflation Rate
+</td>
+<td style="text-align:center;">
+0.048
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1.5px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1.5px">
+(0.472)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+75
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.007
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+−0.007
+</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>By looking at alternative relationships, this table shows us the relationship between inflation and the unemployment rate. As the inflation rate increases by one percent, we can expect the unemployment rate to increase by 0.048 percent. The p.value(0.472) shows us, however, that this relationship is not statistically significant.</p>
+<p>This analysis shows us that the relationship between the inflation rate and the unemployment rate is positive, but very small. In other words, there is a small positive correlation between the inflation rate and the unemployment rate.</p>
+<p>The intercept tells us the estimated value of the unemployment rate (5.569), when inflation is at zero. The p-value tells us tht this intercept is statistically significant.</p>
+<p>More importantly, this chart tells us that as the inflation rate increases by one percentage point, we can expect the unemployment rate to increase by 0.048 percentage points. The p.value(0.472) shows us, however, that this relationship is not statistically significant. The data tells us that the there not either not enough information, or there is not correlation, between inflation rate and unemployment rate. In other words, there appears to be no impact of the inflation rate on the unemployment rate.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>model</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>unemployment_num</span> <span class='op'>~</span> <span class='va'>party_num</span> <span class='op'>+</span> <span class='va'>inflation</span>, data <span class='op'>=</span> <span class='va'>combined_data</span><span class='op'>)</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
@@ -1678,42 +1776,75 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <table>
 <thead>
-<tr class="header">
-<th style="text-align: left;">Variable</th>
-<th style="text-align: right;">Coefficient Estimate</th>
-<th style="text-align: right;">Standard Error</th>
-<th style="text-align: right;">P-Value</th>
+<tr>
+<th style="text-align:left;">
+Variable
+</th>
+<th style="text-align:right;">
+Coefficient Estimate
+</th>
+<th style="text-align:right;">
+Standard Error
+</th>
+<th style="text-align:right;">
+P-Value
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: left;">(Intercept)</td>
-<td style="text-align: right;">5.125</td>
-<td style="text-align: right;">0.354</td>
-<td style="text-align: right;">0.000</td>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+5.125
+</td>
+<td style="text-align:right;">
+0.354
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="even">
-<td style="text-align: left;">party_num</td>
-<td style="text-align: right;">0.904</td>
-<td style="text-align: right;">0.401</td>
-<td style="text-align: right;">0.027</td>
+<tr>
+<td style="text-align:left;">
+party_num
+</td>
+<td style="text-align:right;">
+0.904
+</td>
+<td style="text-align:right;">
+0.401
+</td>
+<td style="text-align:right;">
+0.027
+</td>
 </tr>
-<tr class="odd">
-<td style="text-align: left;">inflation</td>
-<td style="text-align: right;">0.007</td>
-<td style="text-align: right;">0.068</td>
-<td style="text-align: right;">0.919</td>
+<tr>
+<td style="text-align:left;">
+inflation
+</td>
+<td style="text-align:right;">
+0.007
+</td>
+<td style="text-align:right;">
+0.068
+</td>
+<td style="text-align:right;">
+0.919
+</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>This is a linear regression table. This linear regression looks at the unemployment rate as the dependent variable and party_num and inflation as the independent variables. The graph tell us that .904 is the estimated change in the unemployment rate when as the party changes from Democrat to Republican, while controlling for the inflation rate by keeoing it constant. The p-value (0.027) tells us that the political party is statistically significant in predicting the unemployment rate.</p>
-<p>In addition, the chart tells us that when the inflation rate increases by one percent, the unemployment rate will increase by 0.007. This data controls for the unemployment rate by keeping it constant. However, the p-value is .919, meaning that this is not statistically significant, and not a good predictor.</p>
+<p>This is a linear regression table. This linear regression looks at the unemployment rate as the dependent variable and both the political party in the majority and inflation rate as the independent variables. The graph tell us that .904 is the estimated change in the unemployment rate when as the party changes from Democrat to Republican, while controlling for the inflation rate by keeping it constant. The p-value (0.027) tells us that the political party is statistically significant in predicting the unemployment rate.</p>
+<p>In addition, the chart tells us that when the inflation rate increases by one percentage point, the unemployment rate will increase by 0.007 percentage points. This data controls for the unemployment rate by keeping it constant. However, the p-value is .919, meaning that the relationship between inflation rate and the unemployment rate is not statistically significant, meaning that the inflation rate is not a good predictor of the unemployment rate.</p>
 <h2 id="conclusion">Conclusion</h2>
-<p>In conclusion, there appears to be a statistically significant relationship between the party in charge and the unemployment rate. When democrats are the majority in office, on average, the unemployment rate in higher than the unemployment rate when Republicans are in office. This goes against my hypothesis, as I thought that when democrats were in the majority party in Congress, the unemployment rate would be much lower. In addition, my data also shows that although there is a small, positive correlation betwen unemployment rate and inflation rate, this relationship is not significantly signficant.</p>
-<p>Some limitations of my data is the lack of information as to why this might be the case. Some good data to add would be the amount and of legislation passed by each party, to see if there is a relationship between the amount of legislation passed and the unemployment rate. In addition, since legislation often takes time to actually be implemented, it could be the case that the unemployment rate when Republicans are in office is actually only occurring as a result of the legislation enacted by the prior administration. In other words, it might be that the Republican Party has nothing to do with their apparent low unemployment rate.</p>
+<p>In conclusion, there appears to be a statistically significant relationship between the party in charge and the unemployment rate. When democrats are the majority in office, on average, the unemployment rate in higher than the unemployment rate when Republicans are in office. This goes against my hypothesis, as I thought that when democrats were in the majority party in Congress, the unemployment rate would be much lower. In addition, my data also shows that although there appears to be a small, positive correlation between unemployment rate and inflation rate, this relationship is not significantly significant.</p>
+<p>Some limitations of my data is the lack of information as to why this might be the case. Some good data to add would be the amount and of legislation passed by each party when they are in the majority, to see if there is a relationship between the amount of legislation passed and the unemployment rate. In addition, it would be helpful to see the types of legislation that is being passed when each party is in the majority to see if there is a way to explain the unemployment rate. I think some additional variables to look at could be job creation and other types of fiscal policies.</p>
+<p>In addition, since legislation often takes time to actually be implemented, it could be the case that the unemployment rate when Republicans are in office is actually only occurring as a result of the legislation enacted by the prior administration. In other words, it might be that the Republican Party has nothing to do with their apparent low unemployment rate.</p>
 <hr />
-<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
