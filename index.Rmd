@@ -116,7 +116,7 @@ ggplot(combined_data, aes(x = year)) +
   theme_minimal()
 ```
 
-This graph plots the inflation rate over the years, compared to the unemployment rate over the years. At certain points in the graph (year 1970-2010), there appears to be a little overlap. The inflation rate seems to fluctuate in a similar way as the unemployment rate. 
+This graph plots the inflation rate over the years, compared to the unemployment rate over the years. At certain points in the graph (year 1970-2010), there appears to be a little overlap. The inflation rate seems to fluctuate in a similar pattern as the unemployment rate, but not really that much. 
 
 ## Unemployment and Inflation Rate Regression Table 
 
@@ -143,15 +143,19 @@ knitr::kable(model, digits=3, col.names = c("Variable", "Coefficient Estimate", 
 
 
 
-This is a  linear regression table. This linear regression looks at the unemployment rate as the dependent variable and party_num and inflation as the independent variables. The graph tell us that .904 is the estimated change in the unemployment rate when as the party changes from Democrat to Republican, while controlling for the inflation rate. The p-value (0.027) tells us that the political party is statistically significant in predicting the unemployment rate. 
+This is a  linear regression table. This linear regression looks at the unemployment rate as the dependent variable and party_num and inflation as the independent variables. The graph tell us that .904 is the estimated change in the unemployment rate when as the party changes from Democrat to Republican, while controlling for the inflation rate by keeoing it constant. The p-value (0.027) tells us that the political party is statistically significant in predicting the unemployment rate. 
 
-In addition, the chart tells us that when the inflation rate increases by one percent, the unemployment rate will increase by 0.007. This data holds the unemployment rate constant. The p-value is .919, meaning that this is not statistically significant, and not a good predictor. 
+In addition, the chart tells us that when the inflation rate increases by one percent, the unemployment rate will increase by 0.007. This data controls for the unemployment rate by keeping it constant. However, the p-value is .919, meaning that this is not statistically significant, and not a good predictor. 
 
 
 
 
 ## Conclusion 
-In conclusion, there appears to be a statistically significant relationship between the party in charge and the unemployment rate. When democrats are in office, on average, there an increase in the unemployment rate. Some limitations of my data is the lack of information as to why this might be the case. Some good data to add would be the amount and of legislation passed by each party, to see if there is a relationship between the amount of legislation passed and the unemployment rate. In addition, since legislation often takes time to actually be implemented, it could be the case that the unemployment rate when Republicans are in office is actually only occurring as a result of the legislation enacted by the prior administration. In other words, it might be that the Republican Party has nothing to do with their apparent low unemployment rate. 
+In conclusion, there appears to be a statistically significant relationship between the party in charge and the unemployment rate. When democrats are the majority in office, on average, the unemployment rate in higher than the unemployment rate when Republicans are in office. This goes against my hypothesis, as I thought that when democrats were in the majority party in Congress, the unemployment rate would be much lower. In addition, my data also shows that although there is a small, positive correlation betwen unemployment rate and inflation rate, this relationship is not significantly signficant. 
+
+Some limitations of my data is the lack of information as to why this might be the case. Some good data to add would be the amount and of legislation passed by each party, to see if there is a relationship between the amount of legislation passed and the unemployment rate. In addition, since legislation often takes time to actually be implemented, it could be the case that the unemployment rate when Republicans are in office is actually only occurring as a result of the legislation enacted by the prior administration. In other words, it might be that the Republican Party has nothing to do with their apparent low unemployment rate. 
+
+
 
 
 
