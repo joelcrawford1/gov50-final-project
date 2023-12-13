@@ -1535,13 +1535,23 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readxl.tidyverse.org'>readxl</a></span><span class='op'>)</span></span>
-<span><span class='va'>combined</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_excel</a></span><span class='op'>(</span><span class='st'>"~/Downloads/combined.xlsx"</span><span class='op'>)</span></span></code></pre>
+<span><span class='va'>economic</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_excel</a></span><span class='op'>(</span><span class='st'>"~/Downloads/economic.xlsx"</span>, </span>
+<span>    col_types <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"numeric"</span>, <span class='st'>"numeric"</span>, <span class='st'>"numeric"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readxl.tidyverse.org'>readxl</a></span><span class='op'>)</span></span>
+<span><span class='va'>congressional_</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_excel</a></span><span class='op'>(</span><span class='st'>"~/Downloads/congressional .xlsx"</span>, </span>
+<span>    col_types <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"numeric"</span>, <span class='st'>"text"</span>, <span class='st'>"numeric"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span></span>
+<span></span>
+<span><span class='va'>combined_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/merge.html'>merge</a></span><span class='op'>(</span><span class='va'>economic</span>, <span class='va'>congressional_</span>, by <span class='op'>=</span> <span class='st'>"year"</span>, all <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
 <h2 id="unemployment-rate-and-majority-party-boxplot">Unemployment Rate and Majority Party Boxplot</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>combined</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>party</span>, y <span class='op'>=</span> <span class='va'>unemployment_num</span>, fill <span class='op'>=</span> <span class='va'>party</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>combined_data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>party_num</span>, y <span class='op'>=</span> <span class='va'>unemployment_num</span>, fill <span class='op'>=</span> <span class='va'>party_affiliation</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_boxplot.html'>geom_boxplot</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
 <span>    title <span class='op'>=</span> <span class='st'>"Unemployment Rate by Majority Party"</span>,</span>
@@ -1558,7 +1568,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <h2 id="unemployment-rate-and-majority-party-regression-table">Unemployment Rate and Majority Party Regression Table</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>model</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>combined</span>, <span class='va'>unemployment_num</span><span class='op'>~</span><span class='va'>party_num</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>model</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>combined_data</span>, <span class='va'>unemployment_num</span><span class='op'>~</span><span class='va'>party_num</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
 <span>  <span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>term</span>, est<span class='op'>=</span><span class='va'>estimate</span>, se<span class='op'>=</span> <span class='va'>std.error</span>, pval<span class='op'>=</span><span class='va'>p.value</span><span class='op'>)</span></span>
 <span></span>
@@ -1593,7 +1603,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <h2 id="unemployment-rate-and-majority-party-correlation-coeffiecent">Unemployment Rate and Majority Party Correlation Coeffiecent</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>combined</span><span class='op'>$</span><span class='va'>party_num</span>, <span class='va'>combined</span><span class='op'>$</span><span class='va'>unemployment_num</span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>combined_data</span><span class='op'>$</span><span class='va'>party_num</span>, <span class='va'>combined_data</span><span class='op'>$</span><span class='va'>unemployment_num</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code>[1] 0.2691417</code></pre>
 </div>
@@ -1601,7 +1611,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <h2 id="unemployment-and-inflation-rate">Unemployment and Inflation Rate</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>combined</span><span class='op'>$</span><span class='va'>inflation</span>, <span class='va'>combined</span><span class='op'>$</span><span class='va'>unemployment_num</span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>combined_data</span><span class='op'>$</span><span class='va'>inflation</span>, <span class='va'>combined_data</span><span class='op'>$</span><span class='va'>unemployment_num</span><span class='op'>)</span></span></code></pre>
 </div>
 <pre><code>[1] 0.08426532</code></pre>
 </div>
@@ -1609,7 +1619,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <h2 id="unemployment-and-inflation-rate-graph">Unemployment and Inflation Rate Graph</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>combined</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>year</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>combined_data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>year</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>inflation</span>, color <span class='op'>=</span> <span class='st'>"Inflation Rate"</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>1.2</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>unemployment_num</span>, color <span class='op'>=</span> <span class='st'>"Unemployment Rate"</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>1.2</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span></span>
@@ -1626,7 +1636,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <h2 id="unemployment-and-inflation-rate-regression-table">Unemployment and Inflation Rate Regression Table</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>model</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>combined</span>, <span class='va'>unemployment_num</span><span class='op'>~</span><span class='va'>inflation</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>model</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>combined_data</span>, <span class='va'>unemployment_num</span><span class='op'>~</span><span class='va'>inflation</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
 <span>  <span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
 <span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>term</span>, est<span class='op'>=</span><span class='va'>estimate</span>, se<span class='op'>=</span> <span class='va'>std.error</span>, pval<span class='op'>=</span><span class='va'>p.value</span><span class='op'>)</span></span>
 <span></span>
@@ -1658,8 +1668,49 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </table>
 </div>
 <p>By looking at alternative relationships, this table shows us the relationship between inflation and the unemployment rate. As the inflation rate increases by one percent, we can expect the unemployment rate to increase by 0.048 percent. The p.value(0.472) shows us, however, that this relationship is not statistically significant.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>model</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>unemployment_num</span> <span class='op'>~</span> <span class='va'>party_num</span> <span class='op'>+</span> <span class='va'>inflation</span>, data <span class='op'>=</span> <span class='va'>combined_data</span><span class='op'>)</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'>broom</span><span class='fu'>::</span><span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>term</span>, est<span class='op'>=</span><span class='va'>estimate</span>, se<span class='op'>=</span> <span class='va'>std.error</span>, pval<span class='op'>=</span><span class='va'>p.value</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>model</span>, digits<span class='op'>=</span><span class='fl'>3</span>, col.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Variable"</span>, <span class='st'>"Coefficient Estimate"</span>, <span class='st'>"Standard Error"</span>, <span class='st'>"P-Value"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: right;">Coefficient Estimate</th>
+<th style="text-align: right;">Standard Error</th>
+<th style="text-align: right;">P-Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">5.125</td>
+<td style="text-align: right;">0.354</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">party_num</td>
+<td style="text-align: right;">0.904</td>
+<td style="text-align: right;">0.401</td>
+<td style="text-align: right;">0.027</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">inflation</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">0.068</td>
+<td style="text-align: right;">0.919</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>This linear regression looks at the unemployment rate as the dependent variable and party_num and inflation as the independent variable. The graph tell us that .904 is the estimated change in the unemployment rate when as the party changes from Democrat to Republican. The p-value (0.027) tells us that the political party is statistically significant in predicting the unemployment rate.</p>
+<p>In addition, the chart tells us that when the inflation rate increases by one percent, the unemployment rate will increase by 0.007. The p-value is .919, meaning that this is not statistically significant.</p>
 <h2 id="conclusion">Conclusion</h2>
-<p>In conclusion, there appears to be a statistically significant relationship between the party in charge and the unemployment rate. When democrats are in office, on average, there an increase in the unemployment rate. Some limitations of my data is the lack of information as to why this might be the case. Some good data to add would be the amount and of legislation passed by each party, to see if there is a relationship between the amount of legislation passed and the unemployment rate. In addition, since legislation often takes time to actually be implemented, it could be the case that the unemployment rate when Republcians are in office is actually only occurring as a result of the legislation inacted by the prior adminsitration. In other words, it might be that the Republican Party has nothing to do with their apparent low unemployment rate.</p>
+<p>In conclusion, there appears to be a statistically significant relationship between the party in charge and the unemployment rate. When democrats are in office, on average, there an increase in the unemployment rate. Some limitations of my data is the lack of information as to why this might be the case. Some good data to add would be the amount and of legislation passed by each party, to see if there is a relationship between the amount of legislation passed and the unemployment rate. In addition, since legislation often takes time to actually be implemented, it could be the case that the unemployment rate when Republicans are in office is actually only occurring as a result of the legislation inacted by the prior administration. In other words, it might be that the Republican Party has nothing to do with their apparent low unemployment rate.</p>
 <hr />
 <div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
