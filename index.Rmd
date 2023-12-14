@@ -60,7 +60,9 @@ ggplot(combined_data, aes(x = year, y = unemployment_num, fill = Party_Majority)
   ) +
   scale_fill_manual(values = c(D = "steelblue1", R = "indianred1"))
 ```
-This graph looks at the the entire data set. It shows the years that we are looking at and the unemployment rate in each year. The color corresponds to the majority party in office. 
+This graph looks at the the entire data set. It shows the years that we are looking at and the unemployment rate in each year. The color corresponds to the majority party in office. This data unemployment data is measured from the Federal Reserve looking at the number of people who are unemployed divided by the entire labor force (the sum of those who are employed and unemployed). This number is then multiplied by 100 to show the percentage of individuals in the country that are unemployed. The data is cross-sectional. 
+
+
 
 ## Unemployment Rate and Majority Party Boxplot
 
@@ -79,7 +81,7 @@ ggplot(combined_data, aes(x = Party_Majority, y = unemployment_num, fill = Party
 ```
 
 
-So, this graph plots the unemployment rate of each party over 93rd to 115 Congressional Sessions. There are two boxes, one for when the Democratic Party is in the majority, and one for when the Republican Party is in the majority. In each box, there is a thin black line. This line represents the median of the entire data set. As seen in the graph, the median unemployment rate when Democrats are in the majority is higher than the median unemployment rate when Republicans are in the majority. 
+So, this graph plots the unemployment rate of each party over the years. There are two boxes, one for when the Democratic Party is in the majority, and one for when the Republican Party is in the majority. In each box, there is a thin black line. This line represents the median of the entire data set. As seen in the graph, the median unemployment rate when Democrats are in the majority is higher than the median unemployment rate when Republicans are in the majority. 
 
 The median is an important measure since there are more data points for when the Democratic Party is in power, than when the Republican Party is in power. This is represented on the blue box itself being larger than the red box, indicated a larger amount of data points for when the Democrats are in the majority. Nevertheless, the median tells us the middle number to allow us to see where the center of the data set is.
 
