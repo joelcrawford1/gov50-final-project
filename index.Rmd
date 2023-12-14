@@ -149,7 +149,7 @@ The intercept tells us the estimated value of the unemployment rate (5.569), whe
 More importantly, this chart tells us that as the inflation rate increases by one percentage point, we can expect the unemployment rate to increase by 0.048 percentage points. The p.value(0.472) shows us, however, that this relationship is not statistically significant. The data tells us that the there not either not enough information, or there is not correlation, between inflation rate and unemployment rate. In other words, there appears to be no impact of the inflation rate on the unemployment rate.
 
 
-## Multi-Linear Repgression Table (party majority and inflation)
+## Multi-Linear Regression Table (party majority and inflation)
 
 
 ```{r}
