@@ -177,12 +177,3 @@ Some limitations of my data is the lack of information as to why this might be t
 In addition, since legislation often takes time to actually be implemented, it could be the case that the unemployment rate when Republicans are in office is actually only occurring as a result of the legislation enacted by the prior administration. In other words, it might be that the Republican Party has nothing to do with their apparent low unemployment rate. 
 
 I do not necessarily think that political party is a direct casual relationship with unemployment rate. There are so many other confounding variables that might be at play here, including the demographic breakdown of the political parties during each congress, the president in power, the types of legislation being passed, etc... 
-
-
-
-
-
-
-
-----------------------------------------------------------------------------------------
-
