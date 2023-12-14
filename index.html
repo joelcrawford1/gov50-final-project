@@ -1567,7 +1567,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <p><img src="index_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
 </div>
-<p>This graph looks at the the entire data set. It shows the years that we are looking at and the unemployment rate in each year. The color corresponds to the majority party in office. This data unemployment data is measured from the Federal Reserve looking at the number of people who are unemployed divided by the entire labor force (the sum of those who are employed and unemployed). This number is then multiplied by 100 to show the percentage of individuals in the country that are unemployed. The data is cross-sectional.</p>
+<p>This graph looks at the the entire data set. It shows the unemployment rate for each of the years. In addition, the color of ecah bar corresponds to the majority party in office during that particular year. This graph allows us to see the information that we can gain from our data set. This unemployment data is measured by the Federal Reserve. This number if calculated by looking at the number of people who are unemployed divided by the entire labor force (the sum of those who are employed and unemployed). This number is then multiplied by 100 to show the percentage of individuals in the country that are unemployed. The data is cross-sectional.</p>
 <h2 id="unemployment-rate-and-majority-party-boxplot">Unemployment Rate and Majority Party Boxplot</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -1582,8 +1582,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
 </div>
-<p>So, this graph plots the unemployment rate of each party over the years. There are two boxes, one for when the Democratic Party is in the majority, and one for when the Republican Party is in the majority. In each box, there is a thin black line. This line represents the median of the entire data set. As seen in the graph, the median unemployment rate when Democrats are in the majority is higher than the median unemployment rate when Republicans are in the majority.</p>
-<p>The median is an important measure since there are more data points for when the Democratic Party is in power, than when the Republican Party is in power. This is represented on the blue box itself being larger than the red box, indicated a larger amount of data points for when the Democrats are in the majority. Nevertheless, the median tells us the middle number to allow us to see where the center of the data set is.</p>
+<p>So, this graph plots the median unemployment rate of each party over the time period. In the graph, there are two boxes, one for when the Democratic Party is in the majority, and one for when the Republican Party is in the majority. In each box, there is a thin black line. This line represents the median of the entire data set. As seen in the graph, the median unemployment rate when Democrats are in the majority is higher than the median unemployment rate when Republicans are in the majority.</p>
+<p>The median is an important measure since there are more data points for when the Democratic Party is in power, than when the Republican Party is in power. The size of the data is represented on the size of the box. For example, the blue box is larger than the red box, indicating a larger amount of data points for when the Democrats are in the majority. Nevertheless, the median tells us the middle number to allow us to see where the center of the data set is.</p>
 <p>Overall, the graph shows us that the median unemployment rate when Democrats are in the majority is higher than the median unemployment rate when Republicans are in the majority.</p>
 <h2 id="unemployment-rate-and-majority-party-regression-table">Unemployment Rate and Majority Party Regression Table</h2>
 <div class="layout-chunk" data-layout="l-body">
@@ -1664,9 +1664,9 @@ R2 Adj.
 </tbody>
 </table>
 </div>
-<p>So, the intercept 5.141 represents the expected unemployment rate when party_num is 0, or Republican. When democrats are the majority (party_num = 1), the unemployment rate is expected to be.915 percentage points higher than when republicans are in the majority. The co-efficient is statically significant at the 0.05 level because the p-value is 0.02. This means that the unemployment rate associated with party affiliation is likely not due to random chance.</p>
+<p>So, the intercept 5.141 represents the expected unemployment rate when party_num is 0, or Republican. When democrats are the majority (party_num = 1), the unemployment rate is expected to be .915 percentage points higher than when republicans are in the majority. The co-efficient is statically significant at the 0.05 level because the p-value is 0.02. This means that the unemployment rate associated with party affiliation is likely not due to random chance.</p>
 <p>The square root of the R^2 value is 0.268. A correlation coefficient of 0.26 represents a positive correlation between majority party affiliation and the unemployment rate. 0.268 represents a low, but positive, correlation meaning that on average, periods with Democratic majorities in Congress (when party_num = 1) have higher unemployment rates compared to periods when Republicans are in the majority.</p>
-<p>Despite this being true, however, there could also be reverse causality. It might be that as the unemployment rate decreases, people elect a certain party to the majority as a result. So, despite being statistically significant, this relationship might not be causally significant.</p>
+<p>Despite this being true, however, there could also be reverse causality. It might be that as the unemployment rate decreases, people elect a certain party to the majority as a result. So, despite being sstatistically significant, this relationship might not be causally significant.</p>
 <h2 id="unemployment-and-inflation-rate">Unemployment and Inflation Rate</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -1764,8 +1764,9 @@ R2 Adj.
 </table>
 </div>
 <p>This analysis shows us that the relationship between the inflation rate and the unemployment rate is positive, but very small. In other words, there is a small positive correlation between the inflation rate and the unemployment rate.</p>
-<p>The intercept tells us the estimated value of the unemployment rate (5.569), when inflation is at zero. The p-value tells us tht this intercept is statistically significant.</p>
+<p>The intercept tells us the estimated value of the unemployment rate (5.569), when inflation is at zero. The p-value tells us that this intercept is statistically significant.</p>
 <p>More importantly, this chart tells us that as the inflation rate increases by one percentage point, we can expect the unemployment rate to increase by 0.048 percentage points. The p.value(0.472) shows us, however, that this relationship is not statistically significant. The data tells us that the there not either not enough information, or there is not correlation, between inflation rate and unemployment rate. In other words, there appears to be no impact of the inflation rate on the unemployment rate.</p>
+<h2 id="multi-linear-repgression-table-party-majority-and-inflation">Multi-Linear Repgression Table (party majority and inflation)</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>model</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>unemployment_num</span> <span class='op'>~</span> <span class='va'>party_num</span> <span class='op'>+</span> <span class='va'>inflation</span>, data <span class='op'>=</span> <span class='va'>combined_data</span><span class='op'>)</span><span class='op'>)</span><span class='op'>|&gt;</span></span>
